@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:multi_store/views/buyers/nav_screens/widgets/banner_widget.dart';
+import './widgets/banner_widget.dart';
 import './widgets/welcome_text_widget.dart';
 import './widgets/search_input_widget.dart';
 
