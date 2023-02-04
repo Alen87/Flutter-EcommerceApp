@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CategoryText extends StatelessWidget {
-  final List<String> _categoryLable = ['food', 'vegetable', 'egg', 'tea'];
+  final List<String> _categoryLable = [
+    'food',
+    'vegetable',
+    'egg',
+    'tea',
+    'test',
+    'test'
+  ];
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,9 +34,17 @@ class CategoryText extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ActionChip(
-                          label: Text(
-                            _categoryLable[index],
-                            style: TextStyle(color: Colors.white),
+                          backgroundColor: Colors.yellow.shade900,
+                          onPressed: () {},
+                          label: Center(
+                            child: Text(
+                              _categoryLable[index],
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
                       );
