@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({Key? key}) : super(key: key);
+  static const String routeName = '\CategoriesScreen';
 
   @override
   Widget build(BuildContext context) {

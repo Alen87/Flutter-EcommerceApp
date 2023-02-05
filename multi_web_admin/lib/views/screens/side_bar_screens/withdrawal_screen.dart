@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WithdrawalScreen extends StatelessWidget {
-  const WithdrawalScreen({Key? key}) : super(key: key);
+  static const String routeName = '\WithdrawalScreen';
 
   @override
   Widget build(BuildContext context) {

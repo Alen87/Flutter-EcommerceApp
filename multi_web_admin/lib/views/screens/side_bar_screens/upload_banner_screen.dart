@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UploadBannerScreen extends StatelessWidget {
-  const UploadBannerScreen({Key? key}) : super(key: key);
+  static const String routeName = '\UploadBannerScreen';
 
   @override
   Widget build(BuildContext context) {
