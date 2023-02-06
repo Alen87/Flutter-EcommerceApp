@@ -54,9 +54,14 @@ class _UploadBannerScreenState extends State<UploadBannerScreen> {
                         border: Border.all(color: Colors.grey.shade800),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Center(
-                        child: Text('Banners'),
-                      ),
+                      child: _image != null
+                          ? Image.memory(
+                              _image,
+                              fit: BoxFit.cover,
+                            )
+                          : Center(
+                              child: Text('Banner'),
+                            ),
                     ),
                     SizedBox(
                       height: 20,
