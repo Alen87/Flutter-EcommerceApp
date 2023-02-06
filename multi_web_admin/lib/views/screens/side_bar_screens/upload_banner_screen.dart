@@ -26,21 +26,43 @@ class UploadBannerScreen extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(14.0),
-                child: Container(
-                  height: 140,
-                  width: 140,
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade500,
-                    border: Border.all(color: Colors.grey.shade800),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Text('Banners'),
-                  ),
+                child: Column(
+                  children: [
+                    Container(
+                      height: 140,
+                      width: 140,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade500,
+                        border: Border.all(color: Colors.grey.shade800),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Center(
+                        child: Text('Banners'),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.yellow.shade900),
+                      onPressed: () {},
+                      child: Text('Upload Image'),
+                    ),
+                  ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
+                style:
+                    ElevatedButton.styleFrom(primary: Colors.yellow.shade900),
+                onPressed: () {},
+                child: Text('Save'),
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
