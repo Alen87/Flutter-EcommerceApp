@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 
-class CategoriesScreen extends StatelessWidget {
+class CategoriesScreen extends StatefulWidget {
   static const String routeName = '\CategoriesScreen';
 
+  @override
+  State<CategoriesScreen> createState() => _CategoriesScreenState();
+}
+
+class _CategoriesScreenState extends State<CategoriesScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  dynamic _image;
+
+  String? fileName;
+
+  _pickImage() async {
+    FilePickerResult? result = await FilePicker.platform
+        .pickFiles(allowMultiple: false, type: FileType.image);
+    if (result != null) {
+      setState(() {
+        _image = result.files.first.bytes;
+        fileName = result.files.first.name;
+      });
+    }
+  }
 
   uploadCategory() {
     if (_formKey.currentState!.validate()) {
@@ -48,9 +69,14 @@ class CategoriesScreen extends StatelessWidget {
                           border: Border.all(color: Colors.grey.shade800),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Center(
-                          child: Text('Category'),
-                        ),
+                        child: _image != null
+                            ? Image.memory(
+                                _image,
+                                fit: BoxFit.cover,
+                              )
+                            : Center(
+                                child: Text('Category'),
+                              ),
                       ),
                       SizedBox(
                         height: 20,
@@ -58,7 +84,7 @@ class CategoriesScreen extends StatelessWidget {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.yellow.shade900),
-                        onPressed: () {},
+                        onPressed: _pickImage,
                         child: Text('Upload Image'),
                       ),
                     ],
