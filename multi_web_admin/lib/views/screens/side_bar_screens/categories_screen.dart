@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static const String routeName = '\CategoriesScreen';
@@ -9,11 +12,15 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   dynamic _image;
 
-  String? fileName;
+  String? fileName; // can be null                        String? == late String
+
+  late String categoryName; // can be null
 
   _pickImage() async {
     FilePickerResult? result = await FilePicker.platform
@@ -26,12 +33,31 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     }
   }
 
-  uploadCategory() {
+  uploadCategory() async {
+    EasyLoading.show();
     if (_formKey.currentState!.validate()) {
-      print('Good');
+      String imageUrl = await _uploadCategoryBannerToStorage(_image);
+      await _firestore.collection('categories').doc(fileName).set({
+        'image': imageUrl,
+        'categoryName': categoryName,
+      }).whenComplete(() {
+        EasyLoading.dismiss();
+        setState(() {
+          _image = null;
+        });
+      });
     } else {
       print('Bad');
     }
+  }
+
+  _uploadCategoryBannerToStorage(dynamic image) async {
+    Reference ref = _storage.ref().child('categoryImages').child(fileName!);
+    UploadTask uploadTask = ref.putData(image);
+    TaskSnapshot snapshot = await uploadTask;
+
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+    return downloadUrl;
   }
 
   @override
@@ -94,9 +120,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: SizedBox(
                     width: 180,
                     child: TextFormField(
+                      onChanged: (value) {
+                        categoryName = value;
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return 'Please Category Name Must not be empty';
+                          return 'Category Name Cant Be Empty';
                         }
                         return null;
                       },
