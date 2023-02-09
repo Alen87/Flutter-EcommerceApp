@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class CategoryWidget extends StatelessWidget {
-  const CategoryWidget({super.key});
+class BannerWidget extends StatelessWidget {
+  const BannerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _categoriesStream =
-        FirebaseFirestore.instance.collection('categories').snapshots();
+    final Stream<QuerySnapshot> _bannersStream =
+        FirebaseFirestore.instance.collection('banners').snapshots();
     return StreamBuilder<QuerySnapshot>(
-        stream: _categoriesStream,
+        stream: _bannersStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return Text('Something went wrong');
@@ -32,7 +32,7 @@ class CategoryWidget extends StatelessWidget {
               crossAxisSpacing: 8,
             ),
             itemBuilder: (context, index) {
-              final categoryData = snapshot.data!.docs[index];
+              final bannerData = snapshot.data!.docs[index];
               return Column(
                 children: [
                   SizedBox(
@@ -40,11 +40,8 @@ class CategoryWidget extends StatelessWidget {
                     width: 100,
                     child: Image.network(
                       // run in terminal - (flutter run -d chrome --web-renderer html ),to show image
-                      categoryData['image'],
+                      bannerData['image'],
                     ),
-                  ),
-                  Text(
-                    categoryData['categoryName'],
                   ),
                 ],
               );
