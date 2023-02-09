@@ -3,6 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:multi_web_admin/views/screens/side_bar_screens/widgets/category_widget.dart';
 
 class CategoriesScreen extends StatefulWidget {
   static const String routeName = '\CategoriesScreen';
@@ -44,6 +45,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         EasyLoading.dismiss();
         setState(() {
           _image = null;
+          _formKey.currentState!.reset();
         });
       });
     } else {
@@ -147,6 +149,26 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Divider(
+                color: Colors.grey,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Categories',
+                  style: TextStyle(
+                    fontSize: 36,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            CategoryWidget(),
           ],
         ),
       ),
