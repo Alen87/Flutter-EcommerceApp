@@ -38,6 +38,7 @@ class CategoryWidget extends StatelessWidget {
                     height: 100,
                     width: 100,
                     child: Image.network(
+                      // run in terminal - flutter run -d chrome --web-renderer html ,to show image
                       categoryData['image'],
                     ),
                   ),
