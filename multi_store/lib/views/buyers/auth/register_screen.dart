@@ -23,7 +23,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   _signUpUser() async {
     if (_formKey.currentState!.validate()) {
-      await _authController.signUpUsers(email, fullName, phoneNumber, password);
+      await _authController
+          .signUpUsers(email, fullName, phoneNumber, password)
+          .whenComplete(() {
+        setState(() {
+          _formKey.currentState!.reset();
+        });
+      });
+
       return showSnack(context, 'Account Is Created');
     } else {
       return showSnack(context, 'Fields Should Not Be Empty.');
