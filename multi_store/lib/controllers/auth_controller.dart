@@ -21,7 +21,7 @@ class AuthController {
 
         await _firestore.collection('buyers').doc(cred.user!.uid).set({
           'email': email,
-          'fulName': fullName,
+          'fullName': fullName,
           'phoneNumber': phoneNumber,
         });
 

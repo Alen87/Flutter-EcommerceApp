@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:multi_store/views/buyers/auth/register_screen.dart';
-import './views/buyers/main_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
