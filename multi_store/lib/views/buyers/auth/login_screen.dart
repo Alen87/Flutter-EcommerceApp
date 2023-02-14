@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_store/controllers/auth_controller.dart';
 import 'package:multi_store/utils/show_snackBar.dart';
+import 'package:multi_store/views/buyers/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,11 +15,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late String password;
 
+  bool _isLoading = false;
+
   _loginUsers() async {
+    setState(() {
+      _isLoading = true;
+    });
     if (_formKey.currentState!.validate()) {
-      await _authController.loginUsers(email, password);
-      return showSnack(context, 'You Are Now Log In');
+      String res = await _authController.loginUsers(email, password);
+      if (res == 'Success') {
+        return Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return MainScreen();
+            },
+          ),
+        );
+      } else {
+        return showSnack(context, res);
+      }
     } else {
+      setState(() {
+        _isLoading = false;
+      });
       return showSnack(context, 'The Fields Should Not Be Empty.');
     }
   }
@@ -58,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.all(13.0),
                 child: TextFormField(
+                  obscureText: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'The Password Field Should Not Be Empty.';
