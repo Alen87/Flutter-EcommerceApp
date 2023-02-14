@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  late String email;
+
+  late String password;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +27,18 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(13.0),
               child: TextFormField(
+                onChanged: (value) {
+                  email = value;
+                },
                 decoration: InputDecoration(labelText: 'Enter Email Address'),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(13.0),
               child: TextFormField(
+                onChanged: (value) {
+                  password = value;
+                },
                 decoration: InputDecoration(labelText: 'Enter Password'),
               ),
             ),

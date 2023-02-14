@@ -7,7 +7,7 @@ class AuthController {
 
   Future<String> signUpUsers(String email, String fullName, String phoneNumber,
       String password) async {
-    String res = 'Some error occurred';
+    String res = 'Some Error Occurred';
 
     try {
       if (email.isNotEmpty &&
@@ -29,9 +29,25 @@ class AuthController {
 
         res = 'Success';
       } else {
-        res = 'Fields should not be empty.';
+        res = 'Fields Should Not Be Empty.';
       }
     } catch (e) {}
+    return res;
+  }
+
+  loginUsers(String email, String password) async {
+    String res = 'Something Went Wrong';
+    try {
+      if (email.isNotEmpty && password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        res = 'Success';
+      } else {
+        res = 'The Fields Should Not Be Empty.';
+      }
+    } catch (e) {
+      res = e.toString();
+    }
     return res;
   }
 }
