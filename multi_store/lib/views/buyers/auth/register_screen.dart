@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_store/controllers/auth_controller.dart';
 import 'package:multi_store/utils/show_snackBar.dart';
@@ -59,9 +60,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   'Create Customer Account',
                   style: TextStyle(fontSize: 20),
                 ),
-                CircleAvatar(
-                  radius: 64,
-                  backgroundColor: Colors.yellow.shade900,
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 64,
+                      backgroundColor: Colors.yellow.shade900,
+                    ),
+                    Positioned(
+                      right: 5,
+                      top: 5,
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          CupertinoIcons.photo,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(14.0),
