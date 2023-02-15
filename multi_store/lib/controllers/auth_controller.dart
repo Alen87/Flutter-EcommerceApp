@@ -1,10 +1,24 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  _uploadProfileImageToStorage(Uint8List? image) async {
+    Reference ref =
+        _storage.ref().child('profilePics').child(_auth.currentUser!.uid);
+
+    UploadTask uploadTask = ref.putData(image!);
+    TaskSnapshot snapshot = await uploadTask;
+    String downloadUlr = await snapshot.ref.getDownloadURL();
+    return downloadUlr;
+  }
 
   pickProfileImage(ImageSource source) async {
     final ImagePicker _imagePicker = ImagePicker();
