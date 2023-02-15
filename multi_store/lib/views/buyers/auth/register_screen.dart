@@ -1,5 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:multi_store/controllers/auth_controller.dart';
 import 'package:multi_store/utils/show_snackBar.dart';
 import 'package:multi_store/views/buyers/auth/login_screen.dart';
@@ -23,6 +26,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late String password;
   bool _isLoading = false;
 
+  Uint8List? _image;
+
   _signUpUser() async {
     setState(() {
       _isLoading = true;
@@ -44,6 +49,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
       return showSnack(context, 'Fields Should Not Be Empty.');
     }
+  }
+
+  selectGalleryImage() async {
+    Uint8List im = await _authController.pickProfileImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
+
+  selectCameraImage() async {
+    Uint8List im = await _authController.pickProfileImage(ImageSource.camera);
+    setState(() {
+      _image = im;
+    });
   }
 
   @override
@@ -70,7 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       right: 5,
                       top: 5,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: selectGalleryImage,
                         icon: Icon(
                           CupertinoIcons.photo,
                         ),
