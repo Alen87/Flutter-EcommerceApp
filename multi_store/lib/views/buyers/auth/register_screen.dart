@@ -81,12 +81,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Stack(
                   children: [
-                    CircleAvatar(
-                      radius: 64,
-                      backgroundColor: Colors.yellow.shade900,
-                    ),
+                    _image != null
+                        ? CircleAvatar(
+                            radius: 64,
+                            backgroundColor: Colors.yellow.shade900,
+                            backgroundImage: MemoryImage(_image!),
+                          )
+                        : CircleAvatar(
+                            radius: 64,
+                            backgroundColor: Colors.yellow.shade900,
+                            backgroundImage: NetworkImage(
+                                'http://www.tenforums.com/geek/gars/images/2/types/thumb_14331780800User.png'),
+                          ),
                     Positioned(
-                      right: 5,
+                      right: 0,
                       top: 5,
                       child: IconButton(
                         onPressed: selectGalleryImage,
