@@ -33,6 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         return showSnack(context, res);
       }
     } else {
@@ -105,10 +108,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
-                    child: Text(
-                      'Login',
-                      style: TextStyle(letterSpacing: 5, color: Colors.white),
-                    ),
+                    child: _isLoading
+                        ? CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : Text(
+                            'Login',
+                            style: TextStyle(
+                                letterSpacing: 5, color: Colors.white),
+                          ),
                   ),
                 ),
               ),
