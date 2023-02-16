@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
     if (_formKey.currentState!.validate()) {
       await _authController
-          .signUpUsers(email, fullName, phoneNumber, password)
+          .signUpUsers(email, fullName, phoneNumber, password, _image)
           .whenComplete(() {
         setState(() {
           _formKey.currentState!.reset();
