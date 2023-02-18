@@ -16,6 +16,9 @@ class VendorAuthScreen extends StatelessWidget {
         if (!snapshot.hasData) {
           return SignInScreen(providerConfigs: [
             EmailProviderConfiguration(),
+            GoogleProviderConfiguration(
+                clientId: '1:614719216012:android:50681d6155ddeee61e9ea9'),
+            PhoneProviderConfiguration(),
           ]);
         }
 
