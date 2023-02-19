@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:vendor_only/vendor/controllers/vendor_register_controller.dart';
 
 class VendorRegistrationScreen extends StatefulWidget {
   @override
@@ -11,10 +15,26 @@ class VendorRegistrationScreen extends StatefulWidget {
 
 class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final VendorController _vendorController = VendorController();
 
   late String countryValue;
   late String stateValue;
   late String cityValue;
+  Uint8List? _image;
+
+  selectGalleryImage() async {
+    Uint8List im = await _vendorController.pickStoreImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
+  }
+
+  selectCameraImage() async {
+    Uint8List im = await _vendorController.pickStoreImage(ImageSource.camera);
+    setState(() {
+      _image = im;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +67,12 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                               10,
                             ),
                           ),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(CupertinoIcons.photo),
-                          ),
+                          child: _image != null
+                              ? Image.memory(_image!)
+                              : IconButton(
+                                  onPressed: selectGalleryImage,
+                                  icon: Icon(CupertinoIcons.photo),
+                                ),
                         )
                       ],
                     ),
