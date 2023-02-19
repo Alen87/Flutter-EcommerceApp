@@ -1,9 +1,20 @@
+import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class VendorRegistrationScreen extends StatelessWidget {
+class VendorRegistrationScreen extends StatefulWidget {
+  @override
+  State<VendorRegistrationScreen> createState() =>
+      _VendorRegistrationScreenState();
+}
+
+class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  late String countryValue;
+  late String stateValue;
+  late String cityValue;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +87,27 @@ class VendorRegistrationScreen extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: 'Phone Number',
                     ),
-                  )
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: SelectState(
+                      onCountryChanged: (value) {
+                        setState(() {
+                          countryValue = value;
+                        });
+                      },
+                      onStateChanged: (value) {
+                        setState(() {
+                          stateValue = value;
+                        });
+                      },
+                      onCityChanged: (value) {
+                        setState(() {
+                          cityValue = value;
+                        });
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
