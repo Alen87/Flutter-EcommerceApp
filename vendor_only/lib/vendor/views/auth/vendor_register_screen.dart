@@ -7,14 +7,12 @@ class VendorRegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () async {
-            await _auth.signOut();
-          },
-          child: Text('Sign Out'),
+        body: CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          toolbarHeight: 200,
         ),
-      ),
-    );
+      ],
+    ));
   }
 }
