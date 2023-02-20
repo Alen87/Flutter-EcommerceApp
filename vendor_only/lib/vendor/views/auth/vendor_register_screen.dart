@@ -36,6 +36,10 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
     });
   }
 
+  String? _taxStatus;
+
+  List<String> _taxOptions = ['YES', 'NO'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,6 +132,39 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                           cityValue = value;
                         });
                       },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Tax register?',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Flexible(
+                          child: Container(
+                            width: 100,
+                            child: DropdownButtonFormField(
+                                hint: Text('Select'),
+                                items: _taxOptions
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                  return DropdownMenuItem<String>(
+                                      value: value, child: Text(value));
+                                }).toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _taxStatus = value;
+                                  });
+                                }),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ],
