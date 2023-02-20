@@ -163,10 +163,17 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                                   });
                                 }),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
+                  if (_taxStatus == 'YES')
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: TextFormField(
+                        decoration: InputDecoration(labelText: 'Tax Number'),
+                      ),
+                    ),
                 ],
               ),
             ),
