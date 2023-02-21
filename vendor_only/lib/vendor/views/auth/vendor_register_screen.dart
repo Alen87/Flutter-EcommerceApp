@@ -19,6 +19,10 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
   final VendorController _vendorController = VendorController();
 
   late String countryValue;
+  late String businessName;
+  late String email;
+  late String phoneNumber;
+  late String taxNumber;
   late String stateValue;
   late String cityValue;
   Uint8List? _image;
@@ -41,9 +45,10 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
 
   List<String> _taxOptions = ['YES', 'NO'];
 
-  _saveVendorDetail() {
+  _saveVendorDetail() async {
     if (_formKey.currentState!.validate()) {
-      print('Good');
+      await _vendorController.registerVendor(businessName, email, phoneNumber,
+          countryValue, stateValue, cityValue, _taxStatus!, taxNumber, _image);
     } else {
       print('Bad');
     }
@@ -102,6 +107,9 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                 child: Column(
                   children: [
                     TextFormField(
+                      onChanged: (value) {
+                        businessName = value;
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Business Name Field Must Not Be Empty';
@@ -118,6 +126,9 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                       height: 10,
                     ),
                     TextFormField(
+                      onChanged: (value) {
+                        email = value;
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Email Field Must Not Be Empty';
@@ -134,6 +145,9 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                       height: 10,
                     ),
                     TextFormField(
+                      onChanged: (value) {
+                        phoneNumber = value;
+                      },
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Phone Number Field Must Not Be Empty';
@@ -203,6 +217,9 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: TextFormField(
+                          onChanged: (value) {
+                            taxNumber = value;
+                          },
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'Tax Number Field Must Not Be Empty';

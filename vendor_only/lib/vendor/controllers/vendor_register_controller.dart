@@ -46,39 +46,28 @@ class VendorController {
     String countryValue,
     String stateValue,
     String cityValue,
-    String taxOptions,
+    String taxRegistered,
     String taxNumber,
     Uint8List? image,
   ) async {
     String res = 'Some Error Occured';
     try {
-      if (businessName.isNotEmpty &&
-          email.isNotEmpty &&
-          phoneNumber.isNotEmpty &&
-          countryValue.isNotEmpty &&
-          stateValue.isNotEmpty &&
-          cityValue.isNotEmpty &&
-          taxOptions.isNotEmpty &&
-          taxNumber.isNotEmpty &&
-          image != null) {
-        String storeImage = await _uploadVendorImageToStorage(image);
-        // SAVE DATA TO CLOUD FIRESTORE
+      String storeImage = await _uploadVendorImageToStorage(image);
+      // SAVE DATA TO CLOUD FIRESTORE
 
-        await _firestore.collection('vendors').doc(_auth.currentUser!.uid).set({
-          'businessName': businessName,
-          'email': email,
-          'phoneNumber': phoneNumber,
-          'countryValue': countryValue,
-          'stateValue': stateValue,
-          'cityValue': cityValue,
-          'taxOptions': taxOptions,
-          'taxNumber': taxNumber,
-          'storeImage': storeImage,
-          'approved': false,
-        });
-      } else {
-        res = 'Fields Should Not Be Empty.';
-      }
+      await _firestore.collection('vendors').doc(_auth.currentUser!.uid).set({
+        'businessName': businessName,
+        'email': email,
+        'phoneNumber': phoneNumber,
+        'countryValue': countryValue,
+        'stateValue': stateValue,
+        'cityValue': cityValue,
+        'taxRegistered': taxRegistered,
+        'taxNumber': taxNumber,
+        'storeImage': storeImage,
+        'approved': false,
+      });
+
       ;
     } catch (e) {
       res = e.toString();
