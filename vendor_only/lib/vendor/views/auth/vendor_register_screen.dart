@@ -14,6 +14,7 @@ class VendorRegistrationScreen extends StatefulWidget {
 }
 
 class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final VendorController _vendorController = VendorController();
 
@@ -39,6 +40,14 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
   String? _taxStatus;
 
   List<String> _taxOptions = ['YES', 'NO'];
+
+  _saveVendorDetail() {
+    if (_formKey.currentState!.validate()) {
+      print('Good');
+    } else {
+      print('Bad');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,114 +97,147 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  TextFormField(
-                    keyboardType: TextInputType.name,
-                    decoration: InputDecoration(
-                      labelText: 'Business Name',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: 'Email Address',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: SelectState(
-                      onCountryChanged: (value) {
-                        setState(() {
-                          countryValue = value;
-                        });
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Business Name Field Must Not Be Empty';
+                        } else {
+                          return null;
+                        }
                       },
-                      onStateChanged: (value) {
-                        setState(() {
-                          stateValue = value;
-                        });
-                      },
-                      onCityChanged: (value) {
-                        setState(() {
-                          cityValue = value;
-                        });
-                      },
+                      keyboardType: TextInputType.name,
+                      decoration: InputDecoration(
+                        labelText: 'Business Name',
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Tax register?',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Flexible(
-                          child: Container(
-                            width: 100,
-                            child: DropdownButtonFormField(
-                                hint: Text('Select'),
-                                items: _taxOptions
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                  return DropdownMenuItem<String>(
-                                      value: value, child: Text(value));
-                                }).toList(),
-                                onChanged: (value) {
-                                  setState(() {
-                                    _taxStatus = value;
-                                  });
-                                }),
-                          ),
-                        ),
-                      ],
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  if (_taxStatus == 'YES')
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Email Field Must Not Be Empty';
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        labelText: 'Email Address',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Phone Number Field Must Not Be Empty';
+                        } else {
+                          return null;
+                        }
+                      },
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Phone Number',
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: SelectState(
+                        onCountryChanged: (value) {
+                          setState(() {
+                            countryValue = value;
+                          });
+                        },
+                        onStateChanged: (value) {
+                          setState(() {
+                            stateValue = value;
+                          });
+                        },
+                        onCityChanged: (value) {
+                          setState(() {
+                            cityValue = value;
+                          });
+                        },
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: TextFormField(
-                        decoration: InputDecoration(labelText: 'Tax Number'),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Tax register?',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Flexible(
+                            child: Container(
+                              width: 100,
+                              child: DropdownButtonFormField(
+                                  hint: Text('Select'),
+                                  items: _taxOptions
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                        value: value, child: Text(value));
+                                  }).toList(),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _taxStatus = value;
+                                    });
+                                  }),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      height: 30,
-                      width: MediaQuery.of(context).size.width - 40,
-                      decoration: BoxDecoration(
-                        color: Colors.yellow.shade900,
-                        borderRadius: BorderRadius.circular(10),
+                    if (_taxStatus == 'YES')
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Tax Number Field Must Not Be Empty';
+                            } else {
+                              return null;
+                            }
+                          },
+                          decoration: InputDecoration(labelText: 'Tax Number'),
+                        ),
                       ),
-                      child: Center(
-                        child: Text(
-                          'Save',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
+                    InkWell(
+                      onTap: () {
+                        _saveVendorDetail();
+                      },
+                      child: Container(
+                        height: 30,
+                        width: MediaQuery.of(context).size.width - 40,
+                        decoration: BoxDecoration(
+                          color: Colors.yellow.shade900,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Save',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
