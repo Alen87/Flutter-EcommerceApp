@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 class VendorController {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // FUNCTION TO STORE IMAGE IN FIREBASE STORAGE
 
@@ -59,7 +61,21 @@ class VendorController {
           taxOptions.isNotEmpty &&
           taxNumber.isNotEmpty &&
           image != null) {
+        String storeImage = await _uploadVendorImageToStorage(image);
         // SAVE DATA TO CLOUD FIRESTORE
+
+        await _firestore.collection('vendors').doc(_auth.currentUser!.uid).set({
+          'businessName': businessName,
+          'email': email,
+          'phoneNumber': phoneNumber,
+          'countryValue': countryValue,
+          'stateValue': stateValue,
+          'cityValue': cityValue,
+          'taxOptions': taxOptions,
+          'taxNumber': taxNumber,
+          'storeImage': storeImage,
+          'approved': false,
+        });
       } else {
         res = 'Fields Should Not Be Empty.';
       }
