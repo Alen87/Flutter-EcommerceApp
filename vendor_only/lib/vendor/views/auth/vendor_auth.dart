@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:vendor_only/vendor/views/auth/vendor_register_screen.dart';
+import 'package:vendor_only/vendor/views/screens/landing_screen.dart';
 
 class VendorAuthScreen extends StatelessWidget {
   const VendorAuthScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class VendorAuthScreen extends StatelessWidget {
         }
 
         // Render your application if authenticated
-        return VendorRegistrationScreen();
+        return LandingScreen();
       },
     );
   }
