@@ -4,6 +4,7 @@ import 'package:country_state_city_picker/country_state_city_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vendor_only/vendor/controllers/vendor_register_controller.dart';
 
@@ -46,11 +47,22 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
   List<String> _taxOptions = ['YES', 'NO'];
 
   _saveVendorDetail() async {
+    EasyLoading.show(status: 'Please wait');
     if (_formKey.currentState!.validate()) {
-      await _vendorController.registerVendor(businessName, email, phoneNumber,
-          countryValue, stateValue, cityValue, _taxStatus!, taxNumber, _image);
+      await _vendorController
+          .registerVendor(businessName, email, phoneNumber, countryValue,
+              stateValue, cityValue, _taxStatus!, taxNumber, _image)
+          .whenComplete(() {
+        EasyLoading.dismiss();
+
+        setState(() {
+          _formKey.currentState!.reset();
+          _image = null;
+        });
+      });
     } else {
       print('Bad');
+      EasyLoading.dismiss();
     }
   }
 
