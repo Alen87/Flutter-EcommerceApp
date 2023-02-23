@@ -27,12 +27,50 @@ class LandingScreen extends StatelessWidget {
           VendorUserModel vendorUserModel = VendorUserModel.fromJson(
               snapshot.data!.data() as Map<String, dynamic>);
           return Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(vendorUserModel.businessName.toString()),
-            ],
-          ));
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.network(
+                    vendorUserModel.storeImage.toString(),
+                    width: 90,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Text(
+                  vendorUserModel.businessName.toString(),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Your application has been sent to shop\n Admin will back to you soon',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextButton(
+                  onPressed: () async {
+                    await _auth.signOut();
+                  },
+                  child: Text('Sign out'),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );
