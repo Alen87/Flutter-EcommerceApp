@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainVendorScreen extends StatelessWidget {
@@ -7,7 +8,12 @@ class MainVendorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Approved'),
+        child: TextButton(
+          onPressed: () async {
+            await FirebaseAuth.instance.signOut();
+          },
+          child: Text('Sign out'),
+        ),
       ),
     );
   }

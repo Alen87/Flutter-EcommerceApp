@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vendor_only/vendor/models/vendor_user_models.dart';
+import 'package:vendor_only/vendor/views/auth/vendor_register_screen.dart';
 import 'package:vendor_only/vendor/views/screens/main_vendor_screen.dart';
 
 class LandingScreen extends StatelessWidget {
@@ -25,6 +26,11 @@ class LandingScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading");
           }
+
+          if (!snapshot.data!.exists) {
+            return VendorRegistrationScreen();
+          }
+
           VendorUserModel vendorUserModel = VendorUserModel.fromJson(
               snapshot.data!.data() as Map<String, dynamic>);
 
