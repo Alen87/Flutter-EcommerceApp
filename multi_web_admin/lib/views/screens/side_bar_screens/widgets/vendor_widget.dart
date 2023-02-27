@@ -18,9 +18,29 @@ class VendorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: vendorData(
-        1,
-        Container(),
+      child: Row(
+        children: [
+          vendorData(
+            1,
+            Container(height: 50, width: 50, child: Image.network('')),
+          ),
+          vendorData(
+            3,
+            Text('Store'),
+          ),
+          vendorData(
+            2,
+            Text('City'),
+          ),
+          vendorData(
+            1,
+            Text('State'),
+          ),
+          vendorData(
+              1, ElevatedButton(onPressed: () {}, child: Text('Reject'))),
+          vendorData(
+              1, ElevatedButton(onPressed: () {}, child: Text('View More'))),
+        ],
       ),
     );
   }
