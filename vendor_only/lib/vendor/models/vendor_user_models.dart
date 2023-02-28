@@ -1,5 +1,6 @@
 class VendorUserModel {
   final bool? approved;
+  final String? vendorId;
   final String? businessName;
   final String? cityValue;
   final String? countryValue;
@@ -12,6 +13,7 @@ class VendorUserModel {
 
   VendorUserModel({
     required this.approved,
+    required this.vendorId,
     required this.businessName,
     required this.cityValue,
     required this.countryValue,
@@ -26,6 +28,7 @@ class VendorUserModel {
   VendorUserModel.fromJson(Map<String, Object?> json)
       : this(
           approved: json['approved']! as bool,
+          vendorId: json['vendorId']! as String,
           businessName: json['businessName']! as String,
           cityValue: json['cityValue']! as String,
           countryValue: json['countryValue']! as String,
@@ -40,6 +43,7 @@ class VendorUserModel {
   Map<String, Object?> toJson() {
     return {
       'approved': approved,
+      'vendorId': vendorId,
       'businessName': businessName,
       'cityValue': cityValue,
       'countryValue': countryValue,
