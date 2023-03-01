@@ -24,6 +24,7 @@ class VendorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     final Stream<QuerySnapshot> _vendorsStream =
         FirebaseFirestore.instance.collection('vendors').snapshots();
     return StreamBuilder<QuerySnapshot>(
@@ -75,8 +76,23 @@ class VendorWidget extends StatelessWidget {
                     ),
                     vendorData(
                         1,
-                        ElevatedButton(
-                            onPressed: () {}, child: Text('Reject'))),
+                        vendorUserData['approved'] == false
+                            ? ElevatedButton(
+                                onPressed: () async {
+                                  await _firestore
+                                      .collection('vendors')
+                                      .doc(vendorUserData['vendorId'])
+                                      .update({'approved': true});
+                                },
+                                child: Text('Approved'))
+                            : ElevatedButton(
+                                onPressed: () async {
+                                  await _firestore
+                                      .collection('vendors')
+                                      .doc(vendorUserData['vendorId'])
+                                      .update({'approved': false});
+                                },
+                                child: Text('Reject'))),
                     vendorData(
                         1,
                         ElevatedButton(
