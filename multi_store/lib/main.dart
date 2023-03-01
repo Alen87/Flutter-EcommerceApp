@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'Brand-Bold',
       ),
-      home: RegisterScreen(),
+      home: BuyerRegisterScreen(),
     );
   }
 }
