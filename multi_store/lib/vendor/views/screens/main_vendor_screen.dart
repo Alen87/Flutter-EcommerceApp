@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainVendorScreen extends StatelessWidget {
@@ -7,14 +8,19 @@ class MainVendorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: TextButton(
-          onPressed: () async {
-            await FirebaseAuth.instance.signOut();
-          },
-          child: Text('Sign out'),
-        ),
-      ),
+      bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          unselectedItemColor: Colors.black87,
+          selectedItemColor: Colors.yellow.shade900,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.money_dollar), label: 'EARNINGS'),
+            BottomNavigationBarItem(icon: Icon(Icons.upload), label: 'UPLOAD'),
+            BottomNavigationBarItem(icon: Icon(Icons.edit), label: 'EDIT'),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.shopping_cart), label: 'ORDERS'),
+            BottomNavigationBarItem(icon: Icon(Icons.logout), label: 'LOGOUT'),
+          ]),
     );
   }
 }
