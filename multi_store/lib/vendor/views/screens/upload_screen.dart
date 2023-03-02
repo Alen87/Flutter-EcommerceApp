@@ -5,8 +5,28 @@ class UploadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Upload Screen'),
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.yellow.shade900,
+          elevation: 0,
+          bottom: TabBar(tabs: [
+            Tab(
+              child: Text('General'),
+            ),
+            Tab(
+              child: Text('Shipping'),
+            ),
+            Tab(
+              child: Text('Attributes'),
+            ),
+            Tab(
+              child: Text('Images'),
+            ),
+          ]),
+        ),
+      ),
     );
   }
 }
