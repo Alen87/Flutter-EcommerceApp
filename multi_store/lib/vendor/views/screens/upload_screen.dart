@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:multi_store/vendor/views/screens/upload_tab_screens/attributes_tab_screen.dart';
+import 'package:multi_store/vendor/views/screens/upload_tab_screens/general_screen.dart';
+import 'package:multi_store/vendor/views/screens/upload_tab_screens/images_tab_screen.dart';
+import 'package:multi_store/vendor/views/screens/upload_tab_screens/shippnig_screen.dart';
 
 class UploadScreen extends StatelessWidget {
   const UploadScreen({Key? key}) : super(key: key);
@@ -27,18 +31,10 @@ class UploadScreen extends StatelessWidget {
           ]),
         ),
         body: TabBarView(children: [
-          Center(
-            child: Text('General'),
-          ),
-          Center(
-            child: Text('Shipping'),
-          ),
-          Center(
-            child: Text('Attributes'),
-          ),
-          Center(
-            child: Text('Images'),
-          ),
+          GeneralScreen(),
+          ShippingScreen(),
+          AttributesTabScreen(),
+          ImagesTabScreen(),
         ]),
       ),
     );
