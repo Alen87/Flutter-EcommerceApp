@@ -26,6 +26,20 @@ class UploadScreen extends StatelessWidget {
             ),
           ]),
         ),
+        body: TabBarView(children: [
+          Center(
+            child: Text('General'),
+          ),
+          Center(
+            child: Text('Shipping'),
+          ),
+          Center(
+            child: Text('Attributes'),
+          ),
+          Center(
+            child: Text('Images'),
+          ),
+        ]),
       ),
     );
   }
