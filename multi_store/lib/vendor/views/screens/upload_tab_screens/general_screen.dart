@@ -75,6 +75,21 @@ class _GeneralScreenState extends State<GeneralScreen> {
                       borderRadius: BorderRadius.circular(10),
                     )),
               ),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime.now(),
+                        lastDate: DateTime(5000),
+                      );
+                    },
+                    child: Text('Schedule'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
