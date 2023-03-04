@@ -10,7 +10,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final List<String> _categoryList = [];
 
-  _getCategories() async {
+  _getCategories() {
     return _firestore
         .collection('categories')
         .get()
@@ -38,17 +38,29 @@ class _GeneralScreenState extends State<GeneralScreen> {
               decoration: InputDecoration(labelText: 'Enter Product Name'),
             ),
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Enter Product Price'),
             ),
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Enter Product Quantity'),
             ),
+            SizedBox(
+              height: 30,
+            ),
+            DropdownButtonFormField(
+                hint: Text('Select Category'),
+                items: _categoryList.map<DropdownMenuItem<String>>((e) {
+                  return DropdownMenuItem(
+                    value: e,
+                    child: Text(e),
+                  );
+                }).toList(),
+                onChanged: (value) {})
           ],
         ),
       ),
