@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -5,80 +7,102 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 2,
-        backgroundColor: Colors.yellow.shade900,
-        title: Text(
-          'Profile',
-          style: TextStyle(letterSpacing: 4),
-        ),
-        centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Icon(Icons.star),
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 25,
-          ),
-          Center(
-            child: CircleAvatar(
-              radius: 64,
+    CollectionReference users = FirebaseFirestore.instance.collection('buyers');
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(FirebaseAuth.instance.currentUser!.uid).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data =
+              snapshot.data!.data() as Map<String, dynamic>;
+          return Scaffold(
+            appBar: AppBar(
+              elevation: 2,
               backgroundColor: Colors.yellow.shade900,
-            ),
-          ),
-          Text(
-            'Macualay Famous',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Macualayfamous@gmail.com',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.bold,
+              title: Text(
+                'Profile',
+                style: TextStyle(letterSpacing: 4),
               ),
+              centerTitle: true,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Icon(Icons.star),
+                )
+              ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.00),
-            child: Divider(
-              thickness: 2,
-              color: Colors.grey,
+            body: Column(
+              children: [
+                SizedBox(
+                  height: 25,
+                ),
+                Center(
+                  child: CircleAvatar(
+                    radius: 64,
+                    backgroundColor: Colors.yellow.shade900,
+                    backgroundImage: NetworkImage(data['profileImage']),
+                  ),
+                ),
+                Text(
+                  data['fullName'],
+                  style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    data['email'],
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.00),
+                  child: Divider(
+                    thickness: 2,
+                    color: Colors.grey,
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text('Settings'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.phone),
+                  title: Text('Phone'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.add_shopping_cart),
+                  title: Text('Cart'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.shopping_cart),
+                  title: Text('Orders'),
+                ),
+                ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text('Logout',
+                      style: TextStyle(color: Colors.yellow.shade900)),
+                ),
+              ],
             ),
-          ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-          ),
-          ListTile(
-            leading: Icon(Icons.phone),
-            title: Text('Phone'),
-          ),
-          ListTile(
-            leading: Icon(Icons.add_shopping_cart),
-            title: Text('Cart'),
-          ),
-          ListTile(
-            leading: Icon(Icons.shopping_cart),
-            title: Text('Orders'),
-          ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title:
-                Text('Logout', style: TextStyle(color: Colors.yellow.shade900)),
-          ),
-        ],
-      ),
+          );
+        }
+
+        return CircularProgressIndicator();
+      },
     );
   }
 }
