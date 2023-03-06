@@ -45,6 +45,10 @@ class UploadScreen extends StatelessWidget {
           child: ElevatedButton(
               onPressed: () {
                 print(_productProvider.productData['productName']);
+                print(_productProvider.productData['quantity']);
+                print(_productProvider.productData['productPrice']);
+                print(_productProvider.productData['description']);
+                print(_productProvider.productData['category']);
               },
               child: Text('Save')),
         ),

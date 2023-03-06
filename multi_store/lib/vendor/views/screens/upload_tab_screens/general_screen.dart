@@ -49,12 +49,19 @@ class _GeneralScreenState extends State<GeneralScreen> {
                 height: 30,
               ),
               TextFormField(
+                onChanged: (value) {
+                  _productProvider.getFormData(
+                      productPrice: double.parse(value));
+                },
                 decoration: InputDecoration(labelText: 'Enter Product Price'),
               ),
               SizedBox(
                 height: 30,
               ),
               TextFormField(
+                onChanged: (value) {
+                  _productProvider.getFormData(quantity: int.parse(value));
+                },
                 decoration:
                     InputDecoration(labelText: 'Enter Product Quantity'),
               ),
@@ -69,11 +76,18 @@ class _GeneralScreenState extends State<GeneralScreen> {
                       child: Text(e),
                     );
                   }).toList(),
-                  onChanged: (value) {}),
+                  onChanged: (value) {
+                    setState(() {
+                      _productProvider.getFormData(category: value);
+                    });
+                  }),
               SizedBox(
                 height: 30,
               ),
               TextFormField(
+                onChanged: (value) {
+                  _productProvider.getFormData(description: value);
+                },
                 maxLines: 10,
                 maxLength: 800,
                 decoration: InputDecoration(
